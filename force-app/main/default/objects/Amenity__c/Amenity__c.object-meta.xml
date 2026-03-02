@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <label>Amenity</label>
+    <nameField>
+        <label>Amenity Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Amenities</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+    <description>Bike-friendly amenities (bike rack, indoor storage, etc.)</description>
+</CustomObject>
