@@ -1,0 +1,23 @@
+<template>
+    <div class="star-container">
+        <template if:true={readonly}>
+            <template for:each={stars} for:item="star">
+                <span key={star.key} class={star.class}>★</span>
+            </template>
+            <span if:true={showCount} class="rating-text">
+                ({ratingValue})
+            </span>
+        </template>
+        <template if:false={readonly}>
+            <template for:each={stars} for:item="star">
+                <span 
+                    key={star.key} 
+                    class={star.class}
+                    data-value={star.value}
+                    onclick={handleClick}
+                    onmouseenter={handleHover}
+                    onmouseleave={handleLeave}>★</span>
+            </template>
+        </template>
+    </div>
+</template>

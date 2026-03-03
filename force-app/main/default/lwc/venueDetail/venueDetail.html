@@ -1,0 +1,120 @@
+<template>
+    <section class="modal-backdrop" onclick={handleBackdropClick}>
+        <div class="modal-content" onclick={stopProp}>
+            <template if:true={isLoading}>
+                <div class="loading-container">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={detail}>
+                <!-- Header -->
+                <div class="detail-header">
+                    <h2 class="detail-name">{detail.venue.Name}</h2>
+                    <button class="close-btn" onclick={handleClose}>✕</button>
+                </div>
+
+                <!-- Rating -->
+                <div class="detail-rating">
+                    <c-star-rating 
+                        rating-value={detail.venue.Average_Rating__c} 
+                        readonly
+                        show-count>
+                    </c-star-rating>
+                </div>
+
+                <!-- Address & Contact -->
+                <div class="detail-section">
+                    <p class="detail-address">
+                        {detail.venue.Address__c}<br/>
+                        {detail.venue.City__c}, {detail.venue.State__c} {detail.venue.Zip__c}
+                    </p>
+                    <template if:true={detail.venue.Phone__c}>
+                        <p class="detail-contact">📞 <a href={phoneLink}>{detail.venue.Phone__c}</a></p>
+                    </template>
+                    <template if:true={detail.venue.Website__c}>
+                        <p class="detail-contact">🌐 <a href={detail.venue.Website__c} target="_blank">Website</a></p>
+                    </template>
+                    <template if:true={detail.venue.Hours__c}>
+                        <p class="detail-hours">🕐 {detail.venue.Hours__c}</p>
+                    </template>
+                </div>
+
+                <!-- Amenities -->
+                <template if:true={hasAmenities}>
+                    <div class="detail-section">
+                        <h3 class="section-title">Amenities</h3>
+                        <div class="amenity-list">
+                            <template for:each={detail.amenities} for:item="amenity">
+                                <span key={amenity} class="amenity-tag">✓ {amenity}</span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Directions -->
+                <div class="detail-section">
+                    <a href={directionsLink} target="_blank" class="directions-btn">
+                        📍 Get Biking Directions
+                    </a>
+                </div>
+
+                <!-- Reviews -->
+                <div class="detail-section">
+                    <h3 class="section-title">Reviews</h3>
+
+                    <!-- Submit Review -->
+                    <div class="review-form">
+                        <p class="form-label">Leave a review:</p>
+                        <c-star-rating 
+                            rating-value={newRating}
+                            onratingchange={handleRatingChange}>
+                        </c-star-rating>
+                        <lightning-textarea
+                            label="Comment"
+                            variant="label-hidden"
+                            placeholder="How was your experience?"
+                            value={newComment}
+                            onchange={handleCommentChange}
+                            max-length="5000">
+                        </lightning-textarea>
+                        <lightning-button
+                            label="Submit Review"
+                            variant="brand"
+                            onclick={handleSubmitReview}
+                            disabled={submitDisabled}
+                            class="submit-btn">
+                        </lightning-button>
+                        <template if:true={submitSuccess}>
+                            <p class="success-text">✅ Review submitted!</p>
+                        </template>
+                    </div>
+
+                    <!-- Existing Reviews -->
+                    <template if:true={hasReviews}>
+                        <div class="reviews-list">
+                            <template for:each={detail.reviews} for:item="review">
+                                <div key={review.Id} class="review-item">
+                                    <div class="review-header">
+                                        <c-star-rating 
+                                            rating-value={review.Rating__c} 
+                                            readonly>
+                                        </c-star-rating>
+                                        <span class="review-author">{review.CreatedBy.Name}</span>
+                                    </div>
+                                    <template if:true={review.Comment__c}>
+                                        <p class="review-comment">{review.Comment__c}</p>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template if:false={hasReviews}>
+                        <p class="no-reviews">No reviews yet. Be the first!</p>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </section>
+</template>

@@ -1,0 +1,40 @@
+.star-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.star {
+    font-size: 1.25rem;
+    transition: color 0.15s ease;
+}
+
+.star-filled {
+    color: #f59e0b;
+}
+
+.star-empty {
+    color: #d1d5db;
+}
+
+.star:not(.star-filled):not(.star-empty) {
+    cursor: pointer;
+}
+
+:host([readonly]) .star {
+    cursor: default;
+}
+
+:host(:not([readonly])) .star {
+    cursor: pointer;
+}
+
+:host(:not([readonly])) .star:hover {
+    transform: scale(1.2);
+}
+
+.rating-text {
+    margin-left: 4px;
+    font-size: 0.85rem;
+    color: #6b7280;
+}

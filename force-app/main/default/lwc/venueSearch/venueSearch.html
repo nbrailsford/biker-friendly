@@ -1,0 +1,127 @@
+<template>
+    <div class="search-container">
+        <!-- Header -->
+        <div class="app-header">
+            <h1 class="app-title">🚲 Biker Friendly</h1>
+            <p class="app-subtitle">Find shelter when the weather turns</p>
+        </div>
+
+        <!-- Search Mode Toggle -->
+        <div class="search-toggle">
+            <button 
+                class={nearbyButtonClass} 
+                onclick={handleNearbyMode}>
+                📍 Near Me
+            </button>
+            <button 
+                class={textButtonClass} 
+                onclick={handleTextMode}>
+                🔍 Search
+            </button>
+        </div>
+
+        <!-- Text Search Input -->
+        <template if:true={isTextMode}>
+            <div class="search-input-container">
+                <lightning-input
+                    type="search"
+                    label="Search by name or city"
+                    variant="label-hidden"
+                    placeholder="Search by name or city..."
+                    value={searchTerm}
+                    onchange={handleSearchTermChange}>
+                </lightning-input>
+            </div>
+        </template>
+
+        <!-- Nearby Search -->
+        <template if:true={isNearbyMode}>
+            <div class="location-status">
+                <template if:true={locationLoading}>
+                    <lightning-spinner alternative-text="Getting location" size="small"></lightning-spinner>
+                    <span>Getting your location...</span>
+                </template>
+                <template if:true={locationError}>
+                    <p class="error-text">⚠️ {locationError}</p>
+                </template>
+                <template if:true={hasLocation}>
+                    <p class="location-text">📍 Searching within {radius} miles</p>
+                    <lightning-slider
+                        label="Radius (miles)"
+                        min="1"
+                        max="25"
+                        value={radius}
+                        onchange={handleRadiusChange}>
+                    </lightning-slider>
+                </template>
+            </div>
+        </template>
+
+        <!-- Amenity Filters -->
+        <template if:true={hasAmenities}>
+            <div class="filter-section">
+                <h4 class="filter-title">Filter by amenities</h4>
+                <div class="amenity-filters">
+                    <template for:each={amenityOptions} for:item="amenity">
+                        <label key={amenity.id} class={amenity.labelClass}>
+                            <input 
+                                type="checkbox" 
+                                data-id={amenity.id}
+                                checked={amenity.checked}
+                                onchange={handleAmenityToggle}/>
+                            {amenity.name}
+                        </label>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!-- Results -->
+        <div class="results-section">
+            <template if:true={isLoading}>
+                <div class="loading-container">
+                    <lightning-spinner alternative-text="Loading venues" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={hasError}>
+                <p class="error-text">⚠️ {error}</p>
+            </template>
+
+            <template if:true={hasResults}>
+                <p class="results-count">{resultCount} venues found</p>
+                <template for:each={venues} for:item="venue">
+                    <c-venue-card 
+                        key={venue.venue.Id} 
+                        venue={venue}
+                        onvenueselect={handleVenueSelect}>
+                    </c-venue-card>
+                </template>
+            </template>
+
+            <template if:true={noResults}>
+                <div class="empty-state">
+                    <p>🚲 No bike-friendly spots found</p>
+                    <p class="empty-subtitle">Try expanding your search radius or changing filters</p>
+                </div>
+            </template>
+        </div>
+
+        <!-- Add Venue Button -->
+        <div class="add-venue-section">
+            <lightning-button
+                label="+ Suggest a Venue"
+                variant="neutral"
+                onclick={handleAddVenue}>
+            </lightning-button>
+        </div>
+    </div>
+
+    <!-- Venue Detail Modal -->
+    <template if:true={showDetail}>
+        <c-venue-detail
+            venue-id={selectedVenueId}
+            onclose={handleCloseDetail}>
+        </c-venue-detail>
+    </template>
+</template>

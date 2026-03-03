@@ -1,0 +1,41 @@
+<template>
+    <div class="venue-card" onclick={handleSelect}>
+        <div class="card-header">
+            <h3 class="venue-name">{venue.venue.Name}</h3>
+            <template if:true={hasDistance}>
+                <span class="distance-badge">{formattedDistance} mi</span>
+            </template>
+        </div>
+
+        <div class="card-body">
+            <div class="rating-row">
+                <c-star-rating 
+                    rating-value={venue.venue.Average_Rating__c} 
+                    readonly
+                    show-count>
+                </c-star-rating>
+            </div>
+
+            <p class="address">
+                {venue.venue.Address__c}<br/>
+                {venue.venue.City__c}, {venue.venue.State__c} {venue.venue.Zip__c}
+            </p>
+
+            <div if:true={hasAmenities} class="amenities">
+                <template for:each={venue.amenities} for:item="amenity">
+                    <span key={amenity} class="amenity-tag">{amenity}</span>
+                </template>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <template if:true={venue.venue.Phone__c}>
+                <a href={phoneLink} class="footer-link" onclick={stopProp}>📞 Call</a>
+            </template>
+            <template if:true={venue.venue.Website__c}>
+                <a href={venue.venue.Website__c} target="_blank" class="footer-link" onclick={stopProp}>🌐 Website</a>
+            </template>
+            <a href={directionsLink} target="_blank" class="footer-link" onclick={stopProp}>📍 Directions</a>
+        </div>
+    </div>
+</template>

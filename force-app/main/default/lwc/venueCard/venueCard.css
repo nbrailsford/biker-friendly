@@ -1,0 +1,85 @@
+.venue-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    margin-bottom: 12px;
+}
+
+.venue-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.venue-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.distance-badge {
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.card-body {
+    margin-bottom: 12px;
+}
+
+.rating-row {
+    margin-bottom: 8px;
+}
+
+.address {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.amenity-tag {
+    background: #ecfdf5;
+    color: #065f46;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    border: 1px solid #a7f3d0;
+}
+
+.card-footer {
+    display: flex;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.footer-link {
+    font-size: 0.8rem;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
