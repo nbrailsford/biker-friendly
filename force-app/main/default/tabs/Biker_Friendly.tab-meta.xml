@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Biker Friendly venue search</description>
+    <flexiPage>Biker_Friendly</flexiPage>
+    <label>Biker Friendly</label>
+    <motif>Custom100: Airplane</motif>
+</CustomTab>
